@@ -44,12 +44,12 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    @GetMapping("/users/name/{name}")
+    @GetMapping("/name/{name}")
     public User getUserByName(@PathVariable String name) {
         return userRepository.findByName(name);
     }
 
-    @GetMapping("/users/uuid/{uuid}")
+    @GetMapping("/users/{uuid}")
     public User getUserByUuid(@PathVariable UUID uuid) {
         return userRepository.findByUuid(uuid);
     }
