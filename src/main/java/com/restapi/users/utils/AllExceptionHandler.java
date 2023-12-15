@@ -1,7 +1,6 @@
 package com.restapi.users.utils;
 
 import com.restapi.users.service.UserService;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,22 +31,22 @@ public class AllExceptionHandler {
 
             if ("email".equals(fieldName)) {
                 if (!isValidEmail(errorMessage)) {
-                    errors.put("email", "Email must be valid");
+                    errors.put("error02", "Formato incorrecto de correo, porfavor ingresar otra vez");
                 } else if (userService.isEmailRegistered(errorMessage)) {
-                    errors.put("email", "Email is already registered");
+                    errors.put("error01", "El correo ya esta registrado en el Banco BCI, por favor ingrese uno diferente");
                 } else {
                     errors.put(fieldName, errorMessage);
                 }
             } else if ("number".equals(fieldName)) {
                 if (errorMessage.length() > 9) {
-                    errors.put("number", "Number must not exceed 9 characters");
+                    errors.put("number", "El número excede la cantidad de digitos, por favor ingrese otra vez ");
                 } else {
                     errors.put(fieldName, errorMessage);
                 }
             } else if (errorMessage.isEmpty()) {
-                errors.put(fieldName, "Field is required");
+                errors.put(fieldName, "Este campo es requerido, porfavor intente otra vez");
             } else {
-                errors.put(fieldName, errorMessage);
+                errors.put(fieldName, "Este campo es requerido, porfavor intente otra vez");
             }
         });
 

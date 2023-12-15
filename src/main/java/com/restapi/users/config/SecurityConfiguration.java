@@ -23,15 +23,17 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/user/login", "/user/signup/", "/user/forgotPassword",
-                        "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/webjars/**", "/api/users")
+                        "/v3/api-docs/**", "/h2-console/**", "/swagger-ui.html", "/swagger-ui/**", "/webjars/**", "/api/users","/api/users/users/")
                 .permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return httpSecurity.build();
     }
+
+
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

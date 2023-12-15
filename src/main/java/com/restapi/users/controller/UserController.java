@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -36,8 +38,8 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
         if (userService.isEmailRegistered(user.getEmail())) {
-            return new ResponseEntity<>(Collections.singletonMap("email",
-                    "Email is already registered"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(Collections.singletonMap("error01",
+                    "El correo ya esta registrado en el Banco BCI, disculpe las molestias"), HttpStatus.BAD_REQUEST);
         }
         user.setUuid(UUID.randomUUID().toString());
         LocalDateTime now = LocalDateTime.now();
@@ -51,16 +53,15 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
+    @GetMapping("/users")
+    public User getUser(@RequestHeader("Authorization") String token) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByName(userDetails.getUsername());
+        if (!user.getToken().equals(token)) {
+            throw new IllegalArgumentException("El token no coincide con el token del usuario");
+        }
 
-
-    @GetMapping("/users/uuid/{uuid}")
-    public User getUserByUUID(@PathVariable String uuid) {
-        return userRepository.findByUuid(uuid);
-    }
-
-    @GetMapping("/users/name/{name}")
-    public User getUserByName(@PathVariable String name) {
-        return userRepository.findByName(name);
+        return user;
     }
 
 }
