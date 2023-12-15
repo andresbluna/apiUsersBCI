@@ -57,7 +57,7 @@ _Para realizar las pruebas podemos ocupar un IDE de consulta de APIS como Postma
 
 ### Respuesta 🔩
 
-_La respuesta que deberíamos obtener sería silimar a esta_
+****201 CREATED Si el usuario se registra correctamente**
 
 
 ```json
@@ -83,53 +83,47 @@ _La respuesta que deberíamos obtener sería silimar a esta_
 }
 ```
 
-### Y las pruebas de estilo de codificación ⌨️
+
+## Casos de prueba (errores) 🛠️
+
+_Si no ingresamos los datos como corresponden nos debería arrojar los siguientes errores_
 
 
+!! **400 BAD REQUEST Si alguna clave no trae el formato completo**
+```json
+{
+    "password": "Este campo es requerido, porfavor intente otra vez"
+}
+```
+!! **Si el correo ya fue registrado**
+```json
+{
+    "error01": "El correo ya esta registrado en el Banco BCI, disculpe las molestias"
+}
+```
+!! **Si el correo ya fue registrado**
+```json
+{
+    "error01": "El correo ya esta registrado en el Banco BCI, disculpe las molestias"
+}
+```
 
-## Casos de prueba 🛠️
 
-_Si no ingresamos los datos como corresponden nos deberia arrojar los siguientes errores_
-
+## Autor ✒️
 
 
-
-
-
-## Contribuyendo 🖇️
-
-Por favor lee el [CONTRIBUTING.md](https://gist.github.com/villanuevand/xxxxxx) para detalles de nuestro código de conducta, y el proceso para enviarnos pull requests.
-
-## Wiki 📖
-
-Puedes encontrar mucho más de cómo utilizar este proyecto en nuestra [Wiki](https://github.com/tu/proyecto/wiki)
-
-## Versionado 📌
-
-Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones disponibles, mira los [tags en este repositorio](https://github.com/tu/proyecto/tags).
-
-## Autores ✒️
-
-_Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
-
-* **Andrés Villanueva** - *Trabajo Inicial* - [villanuevand](https://github.com/villanuevand)
-* **Fulanito Detal** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
-
-También puedes mirar la lista de todos los [contribuyentes](https://github.com/your/project/contributors) quíenes han participado en este proyecto. 
+* **Andrés Luna** - *Java Developer && STUFF * - [andresbluna](https://github.com/andresbluna)
 
 ## Licencia 📄
 
-Este proyecto está bajo la Licencia (Tu Licencia) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+Este proyecto está bajo la Licencia **The Unlicense**
 
-## Expresiones de Gratitud 🎁
+## THANKS FOR ALL!! 🎁
 
-* Comenta a otros sobre este proyecto 📢
-* Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
-* Da las gracias públicamente 🤓.
-* Dona con cripto a esta dirección: `0xf253fc233333078436d111175e5a76a649890000`
-* etc.
+* Gracias enormes y totales, por permitirme participar de este desafío 📢
+
 
 
 
 ---
-⌨️ con ❤️ por [Villanuevand](https://github.com/Villanuevand) 😊
+⌨️ con ❤️ por [andresbluna](https://github.com/andresbluna) 😊
