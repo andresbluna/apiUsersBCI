@@ -102,6 +102,13 @@ _Si no ingresamos los datos como corresponden nos debería arrojar los siguiente
 }
 ```
 
+!! **Si el correo va comn un formato inválido**
+```json
+{
+    "error02": "Formato incorrecto de correo, porfavor ingresar otra vez"
+}
+```
+
 
 ## Autor ✒️
 
