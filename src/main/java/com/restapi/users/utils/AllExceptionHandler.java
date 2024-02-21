@@ -1,5 +1,8 @@
 package com.restapi.users.utils;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import com.restapi.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,8 @@ public class AllExceptionHandler {
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
+            PhoneNumberValidator phoneNumberValidator = new PhoneNumberValidator();
+
 
             if ("email".equals(fieldName)) {
                 if (!isValidEmail(errorMessage)) {
@@ -37,8 +42,10 @@ public class AllExceptionHandler {
                 } else {
                     errors.put(fieldName, errorMessage);
                 }
-            } else if ("number".equals(fieldName)) {
-                if (errorMessage.length() > 9) {
+            }  else if ("number".equals(fieldName)) {
+                if (!phoneNumberValidator.isValidPhoneNumber(errorMessage)) {
+                    errors.put("number", "El número de teléfono no es válido");
+                } else if (errorMessage.length() > 9) {
                     errors.put("number", "El número excede la cantidad de digitos, por favor ingrese otra vez ");
                 } else {
                     errors.put(fieldName, errorMessage);
@@ -53,10 +60,23 @@ public class AllExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    private boolean isValidEmail(String email) {
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+        try {
+            Phonenumber.PhoneNumber number = phoneNumberUtil.parse(phoneNumber, null);
+            return phoneNumberUtil.isValidNumber(number);
+        } catch (NumberParseException e) {
+            return false;
+        }
+
+
+    }
+
+    private boolean isValidEmail (String email){
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
 }

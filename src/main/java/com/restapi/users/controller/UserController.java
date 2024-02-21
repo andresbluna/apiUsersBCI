@@ -39,7 +39,8 @@ public class UserController {
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
         if (userService.isEmailRegistered(user.getEmail())) {
             return new ResponseEntity<>(Collections.singletonMap("error01",
-                    "El correo ya esta registrado en el Banco BCI, disculpe las molestias"), HttpStatus.BAD_REQUEST);
+                    "El correo ya esta registrado en el Banco BCI, por favor intente con uno diferente"),
+                    HttpStatus.BAD_REQUEST);
         }
         user.setUuid(UUID.randomUUID().toString());
         LocalDateTime now = LocalDateTime.now();
@@ -54,15 +55,20 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public User getUser(@RequestHeader("Authorization") String token) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public User getUser(@RequestHeader("Authorization") String token, @RequestParam("username") String username) {
+        UserDetails userDetails = (UserDetails)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findByName(userDetails.getUsername());
         if (!user.getToken().equals(token)) {
             throw new IllegalArgumentException("El token no coincide con el token del usuario");
         }
 
+        // Aquí puedes usar el parámetro "username" según tus necesidades
+        // Puedes buscar el usuario en base al nombre de usuario proporcionado
+
         return user;
     }
+
 
 }
 

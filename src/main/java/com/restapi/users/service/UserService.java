@@ -34,10 +34,6 @@ public class UserService {
         return userRepository.findByEmail(email) != null;
     }
 
-    public User getUserByUuid(String uuid) {
-        return userRepository.findByUuid(uuid);
-    }
-
     public User createuser(User user) {
         return userRepository.save(user);
     }
