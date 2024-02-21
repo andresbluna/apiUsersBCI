@@ -98,7 +98,14 @@ _Si no ingresamos los datos como corresponden nos debería arrojar los siguiente
 !! **Si el correo ya fue registrado**
 ```json
 {
-    "error01": "El correo ya esta registrado en el Banco BCI, disculpe las molestias"
+    "error01": "El correo ya esta registrado en el Banco BCI, por favor intente con uno diferente"
+}
+```
+
+!! **Si el correo va comn un formato inválido**
+```json
+{
+    "error02": "Formato incorrecto de correo, porfavor ingresar otra vez"
 }
 ```
 
